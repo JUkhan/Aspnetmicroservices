@@ -10,6 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MediatR;
+using Catalog.API.Repositories;
+using Catalog.API.Data;
+
 
 namespace Catalog.API
 {
@@ -31,6 +35,9 @@ namespace Catalog.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" });
             });
+            services.AddMediatR(typeof(Startup).Assembly);
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICatalogContext, CatalogContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

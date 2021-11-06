@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Catalog.API.Data;
 using Catalog.API.Entities;
+using MongoDB.Driver;
 
 namespace Catalog.API.Repositories
 {
@@ -20,29 +22,43 @@ namespace Catalog.API.Repositories
             return product;
         }
 
-        public Task<bool> DeleteProduct(string productId)
+        public async Task<bool> DeleteProduct(string productId)
         {
-            throw new NotImplementedException();
+            var deleteResult = await context.Products.DeleteOneAsync(p => p.Id == productId);
+            return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
 
-        public Task<Product> GetProductByCatagory(string catagoryName)
+        public async Task<IEnumerable<Product>> GetProductsByCatagory(string catagoryName)
         {
-            throw new NotImplementedException();
+            return  await context.Products.Find(p => p.Category == catagoryName).ToListAsync();
         }
 
         public Task<Product> GetProductById(string productId)
         {
-            throw new NotImplementedException();
+            return context.Products.Find(p => p.Id==productId).FirstOrDefaultAsync();
         }
 
-        public Task<IEquatable<Product>> GetProducts()
+        public  async Task<IEnumerable<Product>> GetProducts()
         {
-            throw new NotImplementedException();
+            return await context.Products.Find(p => true).ToListAsync();
+        }
+        public async Task<IEnumerable<Product>> GetProductsByName(string name)
+        {
+            FilterDefinition<Product> filter = Builders<Product>.Filter.ElemMatch(p => p.Name, name);
+
+            return await context
+                            .Products
+                            .Find(filter)
+                            .ToListAsync();
         }
 
-        public Task<bool> UpdateProduct(Product product)
+        public async Task<bool> UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            var updateResult = await context.Products.ReplaceOneAsync(p => p.Id == product.Id, product);
+            return updateResult.IsAcknowledged && updateResult.ModifiedCount>0;
+
         }
+
+        
     }
 }
