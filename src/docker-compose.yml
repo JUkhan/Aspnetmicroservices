@@ -32,10 +32,20 @@ services:
       context: .
       dockerfile: Services/Discount/Discount.Api/Dockerfile
 
+  
+
+  discount.grpcn:
+    image: ${DOCKER_REGISTRY-}discount
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.Grpcn/Dockerfile
+
 volumes:
   mongo_data:
   postgres_data:
   pgadmin_data:
+
+
 
 
 

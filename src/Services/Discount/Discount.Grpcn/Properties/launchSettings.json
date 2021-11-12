@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Discount.Grpcn": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:59988;https://localhost:9642",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

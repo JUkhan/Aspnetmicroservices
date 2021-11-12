@@ -9,6 +9,7 @@ namespace Catalog.API.Data
     {
         public static void SeedData(IMongoCollection<Product> productCollection)
         {
+
             var exitProduct = productCollection.Find(p => true).Any();
             if (!exitProduct)
             {

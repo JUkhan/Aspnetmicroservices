@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Orderring.Domain\Orderring.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Behaviours\" />
+    <None Remove="Contracts\" />
+    <None Remove="Features\" />
+    <None Remove="Contracts\Perrsistence\" />
+    <None Remove="Contracts\Infrastructure\" />
+    <None Remove="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Behaviours\" />
+    <Folder Include="Contracts\" />
+    <Folder Include="Features\" />
+    <Folder Include="Contracts\Persistence\" />
+    <Folder Include="Contracts\Infrastructure\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+</Project>

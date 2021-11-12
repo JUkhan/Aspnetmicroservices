@@ -4,13 +4,23 @@ using System.Linq;
 
 namespace Basket.Api.Entities
 {
-    public record ShoppingCart(string UserName, List<ShoppingCartItem> Items)
+    public class ShoppingCart
     {
+        public string UserName { set; get; }
+
+        public List<ShoppingCartItem> Items { set; get; } = new List<ShoppingCartItem>();
+
         public decimal ToalPrice
         {
             get { return Items.Sum(it=>it.Quantity*it.Price); }
         }
     }
-    public record ShoppingCartItem(int Quantity, string Color, decimal Price, string ProductId, string ProductName);
+    public class ShoppingCartItem {
+        public int Quantity { set; get; }
+        public string Color { set; get; }
+        public decimal Price { set; get; }
+        public string ProductId { set; get; }
+        public string ProductName { set; get; }
+    }
     
 }
