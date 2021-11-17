@@ -2,6 +2,7 @@
 using AutoMapper;
 using Orderring.Domain.Entities;
 using static Ordering.Application.Features.Orders.Commands.CheckoutOrder;
+using static Ordering.Application.Features.Orders.Commands.UpdateOrder;
 using static Ordering.Application.Features.Orders.Queries.GetOrderList;
 
 namespace Ordering.Application.Mappings

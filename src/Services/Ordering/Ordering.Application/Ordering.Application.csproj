@@ -23,6 +23,7 @@
     <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
     <None Remove="MediatR.Extensions.FluentValidation.AspNetCore" />
     <None Remove="Microsoft.Extensions.Logging.Abstractions" />
+    <None Remove="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviours\" />
@@ -35,6 +36,7 @@
     <Folder Include="Features\Orders\" />
     <Folder Include="Features\Orders\Commands\" />
     <Folder Include="Features\Orders\Queries\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />

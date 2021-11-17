@@ -7,15 +7,16 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.Contracts.Infrastructure;
 using Ordering.Application.Contracts.Persistence;
+using Ordering.Application.Exceptions;
 using Ordering.Application.Models;
 using Orderring.Domain.Entities;
 
 namespace Ordering.Application.Features.Orders.Commands
 {
-    public static class UpdateOrder
+    public static class CheckoutOrder
     {
-        public record CheckoutOrderCommand(
-            
+        public record UpdateOrderCommand(
+            int Id,
             string UserName,
           decimal TotalPrice,
           string FirstName,
@@ -30,11 +31,11 @@ namespace Ordering.Application.Features.Orders.Commands
           string Expiration,
           string CVV,
           int PaymentMethod
-            ) : IRequest<int>
+            ) : IRequest
         { }
 
 
-        public class CheckooutOrderHandler : IRequestHandler<CheckoutOrderCommand, int>
+        public class CheckooutOrderHandler : IRequestHandler<UpdateOrderCommand>
         {
             private readonly IOrderRepository orderRepository;
             private readonly IEmailService emailService;
@@ -49,30 +50,26 @@ namespace Ordering.Application.Features.Orders.Commands
                 this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             }
 
-            public async Task<int> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
             {
-                var order = mapper.Map<Order>(request);
-                await orderRepository.AddAsync(order);
-                logger.LogInformation($"Order({order.Id}) successfully created");
-                await SendEmail(order);
-                return order.Id;
-            }
-            async Task SendEmail(Order order)
-            {
-                var email = new Email { To = "ezozkme@gmail.com", Body = $"Order was created.", Subject = "Order was created" };
+                var orderToUpdate = await orderRepository.GetByIdAsync(request.Id);
+                if (orderToUpdate == null)
+                {
+                    throw new NotFoundException(nameof(Order), request.Id);
+                }
 
-                try
-                {
-                    await emailService.SendEmail(email);
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError($"Order {order.Id} failed due to an error with the mail service: {ex.Message}");
-                }
+                mapper.Map(request, orderToUpdate, typeof(UpdateOrderCommand), typeof(Order));
+
+                await orderRepository.UpdateAsync(orderToUpdate);
+
+                logger.LogInformation($"Order {orderToUpdate.Id} is successfully updated.");
+
+                return Unit.Value;
             }
+            
         }
 
-       public class ChecoutOrderCommandValidator : AbstractValidator<CheckoutOrderCommand>
+       public class ChecoutOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
         {
             public ChecoutOrderCommandValidator()
             {
