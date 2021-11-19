@@ -10,7 +10,7 @@ namespace Basket.Api.Entities
 
         public List<ShoppingCartItem> Items { set; get; } = new List<ShoppingCartItem>();
 
-        public decimal ToalPrice
+        public decimal TotalPrice
         {
             get { return Items.Sum(it=>it.Quantity*it.Price); }
         }

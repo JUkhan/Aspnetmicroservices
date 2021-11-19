@@ -14,6 +14,10 @@ using Swashbuckle;
 
 using Ordering.Infrastructure;
 using Microsoft.OpenApi.Models;
+using MassTransit;
+using Eventbus.Messages.Common;
+using Ordering.Api.EventBusConsumer;
+
 
 namespace Ordering.Api
 {
@@ -32,7 +36,25 @@ namespace Ordering.Api
             
             services.AddApplicationServices();
             services.AddInfrastructureServices(Configuration);
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+            // MassTransit-RabbitMQ Configuration
+            services.AddMassTransit(config => {
+
+                config.AddConsumer<BasketCheckoutConsumer>();
+
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+
+                    cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c =>
+                    {
+                        c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
+            services.AddScoped<BasketCheckoutConsumer>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order.API", Version = "v1" });

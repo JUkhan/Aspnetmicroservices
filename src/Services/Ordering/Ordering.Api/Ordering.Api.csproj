@@ -12,6 +12,9 @@
     <ProjectReference Include="..\Ordering.Application\Ordering.Application.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Eventbus.Messages\Eventbus.Messages.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
@@ -19,6 +22,13 @@
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="Extensions\" />
     <None Remove="Swashbuckle.AspNetCore.Swagger" />
+    <None Remove="MassTransit.AspNetCore" />
+    <None Remove="MassTransit.RabbitMQ" />
+    <None Remove="MassTransit" />
+    <None Remove="EventBusConsumer\" />
+    <None Remove="Mapping\" />
+    <None Remove="AutoMapper" />
+    <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -29,8 +39,15 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
    
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.2.4" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.2.4" />
+    <PackageReference Include="MassTransit" Version="7.2.4" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="EventBusConsumer\" />
+    <Folder Include="Mapping\" />
   </ItemGroup>
 </Project>
