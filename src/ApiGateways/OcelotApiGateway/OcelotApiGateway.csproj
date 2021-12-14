@@ -2,12 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <DockerComposeProjectPath>../../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>627fd0c8-3d94-43ec-bfde-ea6e99ecaa41</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Ocelot" />
+    <None Remove="Ocelot.Cache.CacheManager" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Ocelot" Version="17.0.0" />
+    <PackageReference Include="Ocelot.Cache.CacheManager" Version="17.0.0" />
   </ItemGroup>
 </Project>

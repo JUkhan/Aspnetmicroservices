@@ -16,11 +16,11 @@ namespace Ordering.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public WeatherForecastController(IMediator _mediator)
+        public OrderController(IMediator _mediator)
         {
             this._mediator = _mediator ?? throw new ArgumentNullException(nameof(_mediator));
         }
